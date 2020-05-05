@@ -38,14 +38,16 @@ namespace TerrainRemixer {
 					if( tile?.active() != true ) { continue; }
 					
 					float solidThreshold;
-					this.GetSoftenerPercentThresholds( passSpec, out solidThreshold );    //x, y, topY, botY
+					this.GetRemixerPercentThresholds( passSpec, out solidThreshold );    //x, y, topY, botY
 
 					//float val = noise.GetNoise( x, y );
 					float val = map.map[ TerrainRemixerGenPass.GetMapCoord(x, y, topY) ];
 					val -= map.minVal;
 					val /= map.maxVal - map.minVal;
 
-					this.ApplySofteningToTile( tile, val, solidThreshold );
+					if( !TerrainRemixerAPI.ApplyTileRemixers(passSpec, x, y, solidThreshold, ref val) ) {
+						this.ApplyRemixingToTile( tile, val, solidThreshold );
+					}
 				}
 			}
 		}
@@ -58,7 +60,7 @@ namespace TerrainRemixer {
 			botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.DepthEndBase) + passSpec.DepthOffsetBottom;
 		}
 
-		private void GetSoftenerPercentThresholds(
+		private void GetRemixerPercentThresholds(
 					TerrainRemixerGenPassSpec passSpec,
 					out float solidMinPercThresh ) {
 			/*int x,
@@ -78,7 +80,7 @@ namespace TerrainRemixer {
 			}*/
 		}
 
-		private void ApplySofteningToTile(
+		private void ApplyRemixingToTile(
 					Tile tile,
 					float percent,
 					float minPercThreshWhileSolid ) {

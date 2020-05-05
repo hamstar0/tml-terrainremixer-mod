@@ -4,7 +4,6 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using Terraria;
 using Terraria.ModLoader.Config;
-using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.World;
 
 
@@ -53,12 +52,30 @@ namespace TerrainRemixer {
 		[DefaultValue( 0 )]
 		public int DepthOffsetBottom { get; set; } = 0;
 
+		////
+
 		[JsonConverter( typeof( StringEnumConverter ) )]
 		[DefaultValue( WorldDepth.Sky )]
-		public WorldDepth DepthStartBase { get; set; } = WorldDepth.Sky;
+		public WorldDepth DepthStartBase {
+			get => this._DepthStartBase;
+			set {
+				if( (int)value < (int)this._DepthEndBase ) {
+					this._DepthStartBase = value;
+				}
+			}
+		}
+		private WorldDepth _DepthStartBase = WorldDepth.Sky;
 
 		[JsonConverter( typeof( StringEnumConverter ) )]
 		[DefaultValue( WorldDepth.UgDirt )]
-		public WorldDepth DepthEndBase { get; set; } = WorldDepth.UgDirt;
+		public WorldDepth DepthEndBase {
+			get => this._DepthEndBase;
+			set {
+				if( (int)value > (int)this._DepthStartBase ) {
+					this._DepthEndBase = value;
+				}
+			}
+		}
+		private WorldDepth _DepthEndBase = WorldDepth.UgDirt;
 	}
 }

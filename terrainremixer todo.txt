@@ -1,8 +1,14 @@
+v1.1
+-	Extend API
+	-	Add method for supplying noise data
+	-	Add config setting for picking source of noise data
 v1
 -	Implement Filter setting
 -	Implement fade setting
--	Add setting to adjust fade range
 
+-	Add settings to adjust fade range
+-	Add API
+	-	Add method for hooking tile 'remixer'
 -	Replace depth setting
 -	Add default config loadout on mod load
 -	Add setting to adjust noise scale

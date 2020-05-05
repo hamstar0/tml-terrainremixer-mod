@@ -1,7 +1,7 @@
-displayName = Terrain Modifier
+displayName = Terrain Remixer
 author = hamstar
-version = 0.2.0
+version = 0.3.0
 dllReferences = FastNoise
 modReferences = HamstarHelpers@5.6.3
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
-homepage = https://forums.terraria.org/index.php?threads/emitters.87584/
+homepage = https://github.com/hamstar0/tml-terrainremixer-mod
