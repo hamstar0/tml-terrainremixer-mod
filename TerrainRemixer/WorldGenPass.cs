@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.World;
 using HamstarHelpers.Helpers.Debug;
 using FastNoiseCSharp;
 
@@ -26,27 +25,27 @@ namespace TerrainRemixer {
 		}
 
 
-		private void ApplyPass( GenerationProgress progress, TerrainRemixerPassDefinition passDef ) {
+		private void ApplyPass( GenerationProgress progress, TerrainRemixerGenPassSpec passSpec ) {
 			int topY, botY;
-			this.GetVerticalTileRange( passDef, out topY, out botY );
+			this.GetVerticalTileRange( passSpec, out topY, out botY );
 
 			FastNoise noise;
-			var map = TerrainRemixerGenPass.GetNoiseMap( Main.maxTilesX, botY - topY, passDef.Scale, out noise );
+			var map = TerrainRemixerGenPass.GetNoiseMap( Main.maxTilesX, botY - topY, passSpec.Scale, out noise );
 
 			for( int y = topY; y < botY; y++ ) {
 				for( int x = 0; x < Main.maxTilesX; x++ ) {
 					Tile tile = Main.tile[x, y];
 					if( tile?.active() != true ) { continue; }
 					
-					float solidThreshold, wallThreshold;
-					this.GetSoftenerPercentThresholds( passDef, out solidThreshold, out wallThreshold );    //x, y, topY, botY
+					float solidThreshold;
+					this.GetSoftenerPercentThresholds( passSpec, out solidThreshold );    //x, y, topY, botY
 
 					//float val = noise.GetNoise( x, y );
 					float val = map.map[ TerrainRemixerGenPass.GetMapCoord(x, y, topY) ];
 					val -= map.minVal;
 					val /= map.maxVal - map.minVal;
 
-					this.ApplySofteningToTile( tile, val, solidThreshold, wallThreshold );
+					this.ApplySofteningToTile( tile, val, solidThreshold );
 				}
 			}
 		}
@@ -54,33 +53,21 @@ namespace TerrainRemixer {
 
 		////////////////
 
-		public void GetVerticalTileRange( TerrainRemixerPassDefinition passDef, out int topY, out int botY ) {
-			topY = WorldHelpers.SurfaceLayerTopTileY;
-			botY = passDef.MaxDepthOffset;
-			
-			if( passDef.IsMaxDepthSurfaceBottom ) {
-				botY += WorldHelpers.SurfaceLayerBottomTileY;
-			} else if( passDef.IsMaxDepthDirtLayerBottom ) {
-				botY += WorldHelpers.DirtLayerBottomTileY;
-			} else if( passDef.IsMaxDepthRockLayerBottom ) {
-				botY += WorldHelpers.RockLayerBottomTileY;
-			} else {
-				botY += WorldHelpers.UnderworldLayerBottomTileY;
-			}
+		public void GetVerticalTileRange( TerrainRemixerGenPassSpec passSpec, out int topY, out int botY ) {
+			topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.DepthStartBase) + passSpec.DepthOffsetTop;
+			botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.DepthEndBase) + passSpec.DepthOffsetBottom;
 		}
 
 		private void GetSoftenerPercentThresholds(
-					TerrainRemixerPassDefinition passDef,
-					out float solidMinPercThresh,
-					out float wallMinPercThresh ) {
+					TerrainRemixerGenPassSpec passSpec,
+					out float solidMinPercThresh ) {
 			/*int x,
 			int y,
 			int topY,
 			int botY,
 			float tileRangeY = botY - topY;*/
 
-			solidMinPercThresh = passDef.BaseNoisePercentThresholdMinimumForSolid;
-			wallMinPercThresh = passDef.BaseNoisePercentThresholdMinimumForWall;
+			solidMinPercThresh = passSpec.NoisePercentThresholdMinimum;
 			
 			/*if( config.IsSoftenerGradient ) {
 				float deepSolidPercent = (float)(y - topY) / tileRangeY;
@@ -94,12 +81,11 @@ namespace TerrainRemixer {
 		private void ApplySofteningToTile(
 					Tile tile,
 					float percent,
-					float minPercThreshWhileSolid,
-					float minPercThreshWhileWall ) {
+					float minPercThreshWhileSolid ) {
 			if( percent < minPercThreshWhileSolid ) {
 				tile.active( false );
-			}
-			if( percent < minPercThreshWhileWall ) {
+			//}
+			//if( percent < minPercThreshWhileWall ) {
 				tile.wall = 0;
 				tile.wallColor( 0 );
 				tile.wallFrameNumber( 0 );

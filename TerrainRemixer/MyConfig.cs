@@ -27,26 +27,21 @@ namespace TerrainRemixer {
 
 		////////////////
 
-		public List<TerrainRemixerPassDefinition> Passes { get; set; } = new List<TerrainRemixerPassDefinition>();
+		public List<TerrainRemixerGenPassSpec> Passes { get; set; } = new List<TerrainRemixerGenPassSpec>();
 
 
 
 		////////////////
 
 		public void Initialize() {
-			this.Passes.Add( new TerrainRemixerPassDefinition {
+			this.Passes.Add( new TerrainRemixerGenPassSpec {
 				IsAfter = true,
 				LayerName = "Terrain",
-				ReplacesLayer = false,
 				Filter = new TilePatternConfig( new TilePatternBuilder { IsActive = true } ),
-				Scale = 0.1f,
-				MaxDepthOffset = 0,
-				IsMaxDepthSurfaceBottom = true,
-				IsMaxDepthDirtLayerBottom = false,
-				IsMaxDepthRockLayerBottom = false,
-				BaseNoisePercentThresholdMinimumForSolid = 0.35f,
-				BaseNoisePercentThresholdMinimumForWall = 0.35f,
-				FadesToBottom = true,
+				Scale = 0.01f,
+				DepthStartBase = WorldDepth.Sky,
+				DepthEndBase = WorldDepth.UgDirt,
+				NoisePercentThresholdMinimum = 0.35f,
 			} );
 
 			object _;

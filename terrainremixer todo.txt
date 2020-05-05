@@ -1,9 +1,9 @@
 v1
 -	Implement Filter setting
--	Add setting to define region-based terminal depth
 -	Implement fade setting
 -	Add setting to adjust fade range
 
+-	Replace depth setting
 -	Add default config loadout on mod load
 -	Add setting to adjust noise scale
 -	Modify design to use configurable 'gen passes'

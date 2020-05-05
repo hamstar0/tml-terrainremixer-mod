@@ -1,5 +1,9 @@
-# The Trickster
+# Terrain Remixer
 
-A malicious imp occasionally spawns to unleash havoc. It may not be as it appears...
+Makes world terrain more porous (cave-y). Configurable.
 
-https://github.com/hamstar0/tml-thetrickster-mod
+
+Uses FastNoise library: https://github.com/Auburns/FastNoise_CSharp
+
+
+Github: https://github.com/hamstar0/tml-terrainremixer-mod
