@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Terraria.ModLoader.Config;
 using HamstarHelpers.Services.Configs;
 using HamstarHelpers.Classes.UI.ModConfig;
-using HamstarHelpers.Classes.Tiles.TilePattern;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET.Reflection;
 

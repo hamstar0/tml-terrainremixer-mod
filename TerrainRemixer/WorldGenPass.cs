@@ -27,7 +27,7 @@ namespace TerrainRemixer {
 
 
 		private void ApplyPass( GenerationProgress progress, TerrainRemixerGenPassSpec passSpec ) {
-			Rectangle tileArea = this.GetVerticalTileRange( passSpec );
+			Rectangle tileArea = this.GetRegion( passSpec );
 
 			FastNoise noise;
 			var map = TerrainRemixerGenPass.GetNoiseMap( Main.maxTilesX, tileArea.Height, passSpec.NoiseScale, out noise );
@@ -65,16 +65,17 @@ namespace TerrainRemixer {
 
 		////////////////
 
-		public Rectangle GetVerticalTileRange( TerrainRemixerGenPassSpec passSpec ) {
+		public Rectangle GetRegion( TerrainRemixerGenPassSpec passSpec ) {
 			int leftX = (int)(passSpec.BoundsLeftPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsLeftTilePadding;
 			int rightX = (int)(passSpec.BoundsRightPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsRightTilePadding;
 			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsTopStart) + passSpec.BoundsTopTilePadding;
 			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsBottomStart) + passSpec.BoundsBottomTilePadding;
+
 			return new Rectangle(
-				x: leftX,
-				y: topY,
-				width: rightX - leftX,
-				height: botY - topY
+				x: Math.Max( leftX, 0 ),
+				y: Math.Max( topY, 0 ),
+				width: Math.Min( rightX - leftX, Main.maxTilesX-1 ),
+				height: Math.Min( botY - topY, Main.maxTilesY-1 )
 			);
 		}
 

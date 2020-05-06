@@ -45,11 +45,11 @@ namespace TerrainRemixer {
 		////////////////
 
 		[Header( "Regions" )]
-		[Range( -1000, 1000 )]
+		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
 		public int BoundsTopTilePadding { get; set; } = 0;
 
-		[Range( -1000, 1000 )]
+		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
 		public int BoundsBottomTilePadding { get; set; } = 0;
 
@@ -57,7 +57,7 @@ namespace TerrainRemixer {
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
-		[DefaultValue( WorldDepth.Surface )]
+		[DefaultValue( WorldDepth.Sky )]
 		public WorldDepth BoundsTopStart {
 			get => this._BoundsTopStart;
 			set {
@@ -70,7 +70,7 @@ namespace TerrainRemixer {
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
-		[DefaultValue( WorldDepth.UgRock )]
+		[DefaultValue( WorldDepth.Underworld )]
 		public WorldDepth BoundsBottomStart {
 			get => this._BoundsBottomStart;
 			set {
@@ -83,11 +83,11 @@ namespace TerrainRemixer {
 
 		////////////////
 
-		[Range( -4000, 4000 )]
+		[Range( -8000, 8000 )]
 		[DefaultValue( 0 )]
 		public int BoundsLeftTilePadding { get; set; } = 0;
 
-		[Range( -4000, 4000 )]
+		[Range( -8000, 8000 )]
 		[DefaultValue( 0 )]
 		public int BoundsRightTilePadding { get; set; } = 0;
 
