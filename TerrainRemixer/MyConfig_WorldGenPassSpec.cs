@@ -15,31 +15,31 @@ namespace TerrainRemixer {
 		[Range( 0.0001f, 1f )]
 		[DefaultValue( 0.01f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float NoiseScale { get; set; }
+		public float NoiseScale { get; set; } = 0.01f;
 
 
 		////
 
-		[Tooltip( "Minimum value range to select from noise ouput per tile to decide if it's smaller. \nSmaller = less terrain." )]
+		[Tooltip( "Minimum value range of noise ouput per tile before it is removed. \nSmaller = thicker terrain." )]
 		[Range( 0f, 1f )]
 		[DefaultValue( 0.5f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float NoiseValueMinimumForSolidTile { get; set; } = 0.15f;
+		public float NoiseValueMinimumUntilTileRemoval { get; set; } = 0.5f;
 
 
 		////
 
 		[Tooltip( "Percent of vertical distance from region's center before blending starts." )]
 		[Range( 0f, 1f )]
-		[DefaultValue( 0.25f )]
+		[DefaultValue( 0.7f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float VerticalDistancePercentFromCenterBeforeBlending { get; set; } = 0.15f;
+		public float VerticalDistancePercentFromCenterBeforeBlending { get; set; } = 0.7f;
 
 		[Tooltip( "Percent of horizontal distance from region's center before blending starts." )]
 		[Range( 0f, 1f )]
-		[DefaultValue( 0.25f )]
+		[DefaultValue( 0.7f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float HorizontalDistancePercentFromCenterBeforeBlending { get; set; } = 0.25f;
+		public float HorizontalDistancePercentFromCenterBeforeBlending { get; set; } = 0.7f;
 
 
 

@@ -9,11 +9,11 @@ using HamstarHelpers.Helpers.World;
 
 namespace TerrainRemixer {
 	public enum WorldDepth {
-		Sky,
-		Surface,
-		UgDirt,
-		UgRock,
-		Underworld,
+		SkyTop,
+		SurfaceTop,
+		UndergroundDirtTop,
+		UndergroundRockTop,
+		UnderworldTop,
 		Bottom
 	}
 
@@ -23,15 +23,15 @@ namespace TerrainRemixer {
 	public partial class TerrainRemixerGenPassSpec {
 		public static int GetDepthTile( WorldDepth depth ) {
 			switch( depth ) {
-			case WorldDepth.Sky:
+			case WorldDepth.SkyTop:
 				return 0;
-			case WorldDepth.Surface:
+			case WorldDepth.SurfaceTop:
 				return WorldHelpers.SurfaceLayerTopTileY;
-			case WorldDepth.UgDirt:
+			case WorldDepth.UndergroundDirtTop:
 				return WorldHelpers.DirtLayerTopTileY;
-			case WorldDepth.UgRock:
+			case WorldDepth.UndergroundRockTop:
 				return WorldHelpers.RockLayerTopTileY;
-			case WorldDepth.Underworld:
+			case WorldDepth.UnderworldTop:
 				return WorldHelpers.UnderworldLayerTopTileY;
 			case WorldDepth.Bottom:
 				return Main.maxTilesY - 1;
@@ -47,17 +47,17 @@ namespace TerrainRemixer {
 		[Header( "Regions" )]
 		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
-		public int BoundsTopTilePadding { get; set; } = 0;
+		public int BoundsTopTileOffset { get; set; } = 0;
 
 		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
-		public int BoundsBottomTilePadding { get; set; } = 0;
+		public int BoundsBottomTileOffset { get; set; } = 0;
 
 		////
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
-		[DefaultValue( WorldDepth.Sky )]
+		[DefaultValue( WorldDepth.SurfaceTop )]
 		public WorldDepth BoundsTopStart {
 			get => this._BoundsTopStart;
 			set {
@@ -66,11 +66,11 @@ namespace TerrainRemixer {
 				}
 			}
 		}
-		private WorldDepth _BoundsTopStart = WorldDepth.Surface;
+		private WorldDepth _BoundsTopStart = WorldDepth.SurfaceTop;
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
-		[DefaultValue( WorldDepth.Underworld )]
+		[DefaultValue( WorldDepth.UnderworldTop )]
 		public WorldDepth BoundsBottomStart {
 			get => this._BoundsBottomStart;
 			set {
@@ -79,23 +79,23 @@ namespace TerrainRemixer {
 				}
 			}
 		}
-		private WorldDepth _BoundsBottomStart = WorldDepth.UgRock;
+		private WorldDepth _BoundsBottomStart = WorldDepth.UnderworldTop;
 
 		////////////////
 
 		[Range( -8000, 8000 )]
 		[DefaultValue( 0 )]
-		public int BoundsLeftTilePadding { get; set; } = 0;
+		public int BoundsLeftTileOffset { get; set; } = 0;
 
 		[Range( -8000, 8000 )]
 		[DefaultValue( 0 )]
-		public int BoundsRightTilePadding { get; set; } = 0;
+		public int BoundsRightTileOffset { get; set; } = 0;
 
 		////
 
 		[Tooltip( "Percent of world's span to begin the left side of the region upon" )]
 		[Range( 0f, 1f )]
-		[DefaultValue( 0f )]
+		[DefaultValue( 0.35f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float BoundsLeftPercentStart {
 			get => this._BoundsLeftPercentStart;
@@ -105,11 +105,11 @@ namespace TerrainRemixer {
 				}
 			}
 		}
-		private float _BoundsLeftPercentStart = 0f;
+		private float _BoundsLeftPercentStart = 0.35f;
 
 		[Tooltip( "Percent of world's span to begin the right side of the region upon" )]
 		[Range( 0f, 1f )]
-		[DefaultValue( 1f )]
+		[DefaultValue( 0.7f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float BoundsRightPercentStart {
 			get => this._BoundsRightPercentStart;
@@ -119,6 +119,6 @@ namespace TerrainRemixer {
 				}
 			}
 		}
-		private float _BoundsRightPercentStart = 1f;
+		private float _BoundsRightPercentStart = 0.7f;
 	}
 }

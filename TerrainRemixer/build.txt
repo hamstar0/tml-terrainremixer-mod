@@ -1,6 +1,6 @@
 displayName = Terrain Remixer
 author = hamstar
-version = 0.6.1
+version = 0.6.2
 dllReferences = FastNoise
 modReferences = HamstarHelpers@5.6.3
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*

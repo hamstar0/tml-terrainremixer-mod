@@ -50,7 +50,7 @@ namespace TerrainRemixer {
 
 					// Check API or else apply fade amounts according to spec
 					if( !TerrainRemixerAPI.ApplyTileRemixers(passSpec, x, y, ref noiseStrPerc, ref randVal) ) {
-						float noiseMin = passSpec.NoiseValueMinimumForSolidTile * noiseStrPerc;
+						float noiseMin = passSpec.NoiseValueMinimumUntilTileRemoval * noiseStrPerc;
 
 						this.ApplyRemixingToTile( tile, randVal, noiseMin );
 					}
@@ -66,10 +66,10 @@ namespace TerrainRemixer {
 		////////////////
 
 		public Rectangle GetRegion( TerrainRemixerGenPassSpec passSpec ) {
-			int leftX = (int)(passSpec.BoundsLeftPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsLeftTilePadding;
-			int rightX = (int)(passSpec.BoundsRightPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsRightTilePadding;
-			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsTopStart) + passSpec.BoundsTopTilePadding;
-			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsBottomStart) + passSpec.BoundsBottomTilePadding;
+			int leftX = (int)(passSpec.BoundsLeftPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsLeftTileOffset;
+			int rightX = (int)(passSpec.BoundsRightPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsRightTileOffset;
+			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsTopStart) + passSpec.BoundsTopTileOffset;
+			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsBottomStart) + passSpec.BoundsBottomTileOffset;
 
 			return new Rectangle(
 				x: Math.Max( leftX, 0 ),

@@ -13,6 +13,7 @@ namespace TerrainRemixer {
 
 
 
+	[Label( "Config" )]
 	public partial class TerrainRemixerConfig : StackableModConfig {
 		public static TerrainRemixerConfig Instance => ModConfigStack.GetMergedConfigs<TerrainRemixerConfig>();
 
@@ -33,16 +34,34 @@ namespace TerrainRemixer {
 		////////////////
 
 		public void Initialize() {
+			this.Passes.Clear();
+			
 			this.Passes.Add( new TerrainRemixerGenPassSpec {
 				GensAfterLayer = true,
 				LayerName = "Terrain",
 				//Filter = new TilePatternConfig( new TilePatternBuilder { IsActive = true } ),
 				NoiseScale = 0.01f,
-				BoundsTopStart = WorldDepth.Sky,
-				BoundsBottomStart = WorldDepth.UgDirt,
-				NoiseValueMinimumForSolidTile = 0.35f,
-				HorizontalDistancePercentFromCenterBeforeBlending = 1f,
-				VerticalDistancePercentFromCenterBeforeBlending = 0.5f,
+				NoiseValueMinimumUntilTileRemoval = 0.6f,
+				BoundsTopStart = WorldDepth.SurfaceTop,
+				BoundsBottomStart = WorldDepth.UnderworldTop,
+				HorizontalDistancePercentFromCenterBeforeBlending = 0.8f,
+				VerticalDistancePercentFromCenterBeforeBlending = 0.7f,
+				BoundsLeftPercentStart = 0.48f,
+				BoundsRightPercentStart = 0.52f,
+			} );
+			this.Passes.Add( new TerrainRemixerGenPassSpec {
+				GensAfterLayer = true,
+				LayerName = "Terrain",
+				NoiseScale = 0.01f,
+				NoiseValueMinimumUntilTileRemoval = 0.65f,
+				BoundsTopStart = WorldDepth.UndergroundRockTop,
+				BoundsBottomStart = WorldDepth.UnderworldTop,
+				HorizontalDistancePercentFromCenterBeforeBlending = 0.75f,
+				VerticalDistancePercentFromCenterBeforeBlending = 0.9f,
+				BoundsLeftPercentStart = 0.2f,
+				BoundsRightPercentStart = 0.8f,
+				BoundsTopTileOffset = 200,
+				BoundsBottomTileOffset = -200,
 			} );
 
 			object _;
