@@ -65,9 +65,16 @@ namespace TerrainRemixer {
 		////////////////
 
 		public Rectangle GetVerticalTileRange( TerrainRemixerGenPassSpec passSpec ) {
-			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.DepthStartBase) + passSpec.DepthOffsetTop;
-			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.DepthEndBase) + passSpec.DepthOffsetBottom;
-			return new Rectangle( x: 0, y: topY, width: Main.maxTilesX, height: botY - topY );
+			int leftX = (int)(passSpec.BoundsLeftPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsLeftTileOffset;
+			int rightX = (int)(passSpec.BoundsRightPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsRightTileOffset;
+			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsTopStart) + passSpec.BoundsTopTileOffset;
+			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsBottomStart) + passSpec.BoundsBottomTileOffset;
+			return new Rectangle(
+				x: leftX,
+				y: topY,
+				width: rightX - leftX,
+				height: botY - topY
+			);
 		}
 
 		private float GetRemixerNoiseStrengthPercent(

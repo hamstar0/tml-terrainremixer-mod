@@ -10,8 +10,8 @@ v2
 
 v1
 -	Add tooltips to config
--	Implement horizontal bounds (left%, right%)
 
+-	Implement horizontal bounds (left%, right%)
 -	@Test fade
 -	Implement fade settings
 -	Add settings to adjust fade range

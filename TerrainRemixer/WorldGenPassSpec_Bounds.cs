@@ -46,38 +46,74 @@ namespace TerrainRemixer {
 
 		[Range( -1000, 1000 )]
 		[DefaultValue( 0 )]
-		public int DepthOffsetTop { get; set; } = 0;
+		public int BoundsTopTileOffset { get; set; } = 0;
 
 		[Range( -1000, 1000 )]
 		[DefaultValue( 0 )]
-		public int DepthOffsetBottom { get; set; } = 0;
+		public int BoundsBottomTileOffset { get; set; } = 0;
 
 		////
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
 		[DefaultValue( WorldDepth.Sky )]
-		public WorldDepth DepthStartBase {
-			get => this._DepthStartBase;
+		public WorldDepth BoundsTopStart {
+			get => this._BoundsTopStart;
 			set {
-				if( (int)value < (int)this._DepthEndBase ) {
-					this._DepthStartBase = value;
+				if( (int)value < (int)this._BoundsBottomStart ) {
+					this._BoundsTopStart = value;
 				}
 			}
 		}
-		private WorldDepth _DepthStartBase = WorldDepth.Sky;
+		private WorldDepth _BoundsTopStart = WorldDepth.Sky;
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
 		[DefaultValue( WorldDepth.UgRock )]
-		public WorldDepth DepthEndBase {
-			get => this._DepthEndBase;
+		public WorldDepth BoundsBottomStart {
+			get => this._BoundsBottomStart;
 			set {
-				if( (int)value > (int)this._DepthStartBase ) {
-					this._DepthEndBase = value;
+				if( (int)value > (int)this._BoundsTopStart ) {
+					this._BoundsBottomStart = value;
 				}
 			}
 		}
-		private WorldDepth _DepthEndBase = WorldDepth.UgRock;
+		private WorldDepth _BoundsBottomStart = WorldDepth.UgRock;
+
+		////////////////
+
+		[Range( -1000, 1000 )]
+		[DefaultValue( 0 )]
+		public int BoundsLeftTileOffset { get; set; } = 0;
+
+		[Range( -1000, 1000 )]
+		[DefaultValue( 0 )]
+		public int BoundsRightTileOffset { get; set; } = 0;
+
+		////
+
+		[Range( 0f, 1f )]
+		[DefaultValue( 0f )]
+		public float BoundsLeftPercentStart {
+			get => this._BoundsLeftPercentStart;
+			set {
+				if( (int)value < (int)this._BoundsRightPercentStart ) {
+					this._BoundsLeftPercentStart = value;
+				}
+			}
+		}
+		private float _BoundsLeftPercentStart = 0f;
+
+		[Range( 0f, 1f )]
+		[DefaultValue( 1f )]
+		public float BoundsRightPercentStart {
+			get => this._BoundsRightPercentStart;
+			set {
+				if( (int)value > (int)this._BoundsLeftPercentStart ) {
+					this._BoundsRightPercentStart = value;
+				}
+			}
+		}
+		private float _BoundsRightPercentStart = 1f;
 	}
 }
