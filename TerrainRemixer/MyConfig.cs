@@ -41,7 +41,9 @@ namespace TerrainRemixer {
 				Scale = 0.01f,
 				DepthStartBase = WorldDepth.Sky,
 				DepthEndBase = WorldDepth.UgDirt,
-				NoisePercentThresholdMinimum = 0.35f,
+				NoiseValueMinimumForSolidTile = 0.35f,
+				HorizontalDistancePercentFromCenterBeforeBlending = 1f,
+				VerticalDistancePercentFromCenterBeforeBlending = 0.5f,
 			} );
 
 			object _;

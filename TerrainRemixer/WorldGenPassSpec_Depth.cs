@@ -54,6 +54,7 @@ namespace TerrainRemixer {
 
 		////
 
+		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
 		[DefaultValue( WorldDepth.Sky )]
 		public WorldDepth DepthStartBase {
@@ -66,8 +67,9 @@ namespace TerrainRemixer {
 		}
 		private WorldDepth _DepthStartBase = WorldDepth.Sky;
 
+		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
-		[DefaultValue( WorldDepth.UgDirt )]
+		[DefaultValue( WorldDepth.UgRock )]
 		public WorldDepth DepthEndBase {
 			get => this._DepthEndBase;
 			set {
@@ -76,6 +78,6 @@ namespace TerrainRemixer {
 				}
 			}
 		}
-		private WorldDepth _DepthEndBase = WorldDepth.UgDirt;
+		private WorldDepth _DepthEndBase = WorldDepth.UgRock;
 	}
 }

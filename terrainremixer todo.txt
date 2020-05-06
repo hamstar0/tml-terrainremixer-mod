@@ -4,8 +4,9 @@ v1.1
 	-	Add config setting for picking source of noise data
 v1
 -	Implement Filter setting
--	Implement fade setting
+-	@Test fade
 
+-	Implement fade settings
 -	Add settings to adjust fade range
 -	Add API
 	-	Add method for hooking tile 'remixer'

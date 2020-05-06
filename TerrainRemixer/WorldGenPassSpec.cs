@@ -23,7 +23,7 @@ namespace TerrainRemixer {
 		[Range( 0f, 1f )]
 		[DefaultValue( 0.5f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float NoisePercentThresholdMinimum { get; set; } = 0.5f;
+		public float NoiseValueMinimumForSolidTile { get; set; } = 0.5f;
 
 
 		////
@@ -31,12 +31,12 @@ namespace TerrainRemixer {
 		[Range( 0f, 1f )]
 		[DefaultValue( 0.5f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float FadeFromCenterThresholdVerticalPercent { get; set; } = 0.5f;
+		public float VerticalDistancePercentFromCenterBeforeBlending { get; set; } = 0.5f;
 
 		[Range( 0f, 1f )]
 		[DefaultValue( 0f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float FadeFromCenterThresholdHorizontalPercent { get; set; } = 0f;
+		public float HorizontalDistancePercentFromCenterBeforeBlending { get; set; } = 0f;
 
 
 
