@@ -29,14 +29,14 @@ namespace TerrainRemixer {
 		////
 
 		[Range( 0f, 1f )]
-		[DefaultValue( 0.5f )]
+		[DefaultValue( 0.25f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float VerticalDistancePercentFromCenterBeforeBlending { get; set; } = 0.5f;
+		public float VerticalDistancePercentFromCenterBeforeBlending { get; set; } = 0.25f;
 
 		[Range( 0f, 1f )]
-		[DefaultValue( 0f )]
+		[DefaultValue( 0.25f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float HorizontalDistancePercentFromCenterBeforeBlending { get; set; } = 0f;
+		public float HorizontalDistancePercentFromCenterBeforeBlending { get; set; } = 0.25f;
 
 
 

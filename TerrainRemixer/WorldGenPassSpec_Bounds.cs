@@ -82,11 +82,11 @@ namespace TerrainRemixer {
 
 		////////////////
 
-		[Range( -1000, 1000 )]
+		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
 		public int BoundsLeftTileOffset { get; set; } = 0;
 
-		[Range( -1000, 1000 )]
+		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
 		public int BoundsRightTileOffset { get; set; } = 0;
 
@@ -94,10 +94,11 @@ namespace TerrainRemixer {
 
 		[Range( 0f, 1f )]
 		[DefaultValue( 0f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float BoundsLeftPercentStart {
 			get => this._BoundsLeftPercentStart;
 			set {
-				if( (int)value < (int)this._BoundsRightPercentStart ) {
+				if( value < this._BoundsRightPercentStart ) {
 					this._BoundsLeftPercentStart = value;
 				}
 			}
@@ -106,10 +107,11 @@ namespace TerrainRemixer {
 
 		[Range( 0f, 1f )]
 		[DefaultValue( 1f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float BoundsRightPercentStart {
 			get => this._BoundsRightPercentStart;
 			set {
-				if( (int)value > (int)this._BoundsLeftPercentStart ) {
+				if( value > this._BoundsLeftPercentStart ) {
 					this._BoundsRightPercentStart = value;
 				}
 			}

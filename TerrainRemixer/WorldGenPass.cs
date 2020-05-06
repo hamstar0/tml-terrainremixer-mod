@@ -33,10 +33,11 @@ namespace TerrainRemixer {
 			var map = TerrainRemixerGenPass.GetNoiseMap( Main.maxTilesX, tileArea.Height, passSpec.Scale, out noise );
 
 			float totalTiles = tileArea.Height * Main.maxTilesX;
-
 			int botY = tileArea.Bottom;
-			for( int y = tileArea.X; y < botY; y++ ) {
-				for( int x = 0; x < Main.maxTilesX; x++ ) {
+			int rightX = tileArea.Right;
+
+			for( int y = tileArea.Y; y < botY; y++ ) {
+				for( int x = tileArea.X; x < rightX; x++ ) {
 					Tile tile = Main.tile[x, y];
 					if( tile?.active() != true ) { continue; }
 					
