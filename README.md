@@ -1,6 +1,6 @@
 # Terrain Remixer
 
-Makes world terrain more porous (cave-y). Configurable.
+Allows carving out caves and hills by configurable specifications. Allows natural-looking terrain removal or reshaping. Region size, cutting scale, cut density, world gen phase, and number of cuts are all configurable.
 
 
 Uses FastNoise library: https://github.com/Auburns/FastNoise_CSharp

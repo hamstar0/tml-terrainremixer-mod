@@ -6,11 +6,8 @@ v2
 -	Implement painter
 -	Implement Filter setting
 
-
-
 v1
 -	Add tooltips to config
-
 -	Implement horizontal bounds (left%, right%)
 -	@Test fade
 -	Implement fade settings
