@@ -44,19 +44,20 @@ namespace TerrainRemixer {
 
 		////////////////
 
+		[Header( "Regions" )]
 		[Range( -1000, 1000 )]
 		[DefaultValue( 0 )]
-		public int BoundsTopTileOffset { get; set; } = 0;
+		public int BoundsTopTilePadding { get; set; } = 0;
 
 		[Range( -1000, 1000 )]
 		[DefaultValue( 0 )]
-		public int BoundsBottomTileOffset { get; set; } = 0;
+		public int BoundsBottomTilePadding { get; set; } = 0;
 
 		////
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
-		[DefaultValue( WorldDepth.Sky )]
+		[DefaultValue( WorldDepth.Surface )]
 		public WorldDepth BoundsTopStart {
 			get => this._BoundsTopStart;
 			set {
@@ -65,7 +66,7 @@ namespace TerrainRemixer {
 				}
 			}
 		}
-		private WorldDepth _BoundsTopStart = WorldDepth.Sky;
+		private WorldDepth _BoundsTopStart = WorldDepth.Surface;
 
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
@@ -84,14 +85,15 @@ namespace TerrainRemixer {
 
 		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
-		public int BoundsLeftTileOffset { get; set; } = 0;
+		public int BoundsLeftTilePadding { get; set; } = 0;
 
 		[Range( -4000, 4000 )]
 		[DefaultValue( 0 )]
-		public int BoundsRightTileOffset { get; set; } = 0;
+		public int BoundsRightTilePadding { get; set; } = 0;
 
 		////
 
+		[Tooltip( "Percent of world's span to begin the left side of the region upon" )]
 		[Range( 0f, 1f )]
 		[DefaultValue( 0f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
@@ -105,6 +107,7 @@ namespace TerrainRemixer {
 		}
 		private float _BoundsLeftPercentStart = 0f;
 
+		[Tooltip( "Percent of world's span to begin the right side of the region upon" )]
 		[Range( 0f, 1f )]
 		[DefaultValue( 1f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]

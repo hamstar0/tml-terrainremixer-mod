@@ -35,10 +35,10 @@ namespace TerrainRemixer {
 
 		public void Initialize() {
 			this.Passes.Add( new TerrainRemixerGenPassSpec {
-				IsAfter = true,
+				GensAfterLayer = true,
 				LayerName = "Terrain",
-				Filter = new TilePatternConfig( new TilePatternBuilder { IsActive = true } ),
-				Scale = 0.01f,
+				//Filter = new TilePatternConfig( new TilePatternBuilder { IsActive = true } ),
+				NoiseScale = 0.01f,
 				BoundsTopStart = WorldDepth.Sky,
 				BoundsBottomStart = WorldDepth.UgDirt,
 				NoiseValueMinimumForSolidTile = 0.35f,

@@ -5,10 +5,12 @@ using Terraria.ModLoader.Config;
 
 namespace TerrainRemixer {
 	public partial class TerrainRemixerGenPassSpec {
+		[Header( "World Gen Pass Layer" )]
+		[Tooltip( "Indicates to apply this pass after the given layer (LayerName)" )]
 		[DefaultValue( true )]
-		public bool IsAfter { get; set; } = true;
+		public bool GensAfterLayer { get; set; } = true;
 
-		//[JsonConverter( typeof( StringEnumConverter ) )]
+		[Tooltip( "Existing world gen layer to run this 'pass' upon" )]
 		[DrawTicks]
 		[OptionStrings( new string[] {
 			"Reset",

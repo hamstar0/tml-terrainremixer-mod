@@ -30,7 +30,7 @@ namespace TerrainRemixer {
 			Rectangle tileArea = this.GetVerticalTileRange( passSpec );
 
 			FastNoise noise;
-			var map = TerrainRemixerGenPass.GetNoiseMap( Main.maxTilesX, tileArea.Height, passSpec.Scale, out noise );
+			var map = TerrainRemixerGenPass.GetNoiseMap( Main.maxTilesX, tileArea.Height, passSpec.NoiseScale, out noise );
 
 			float totalTiles = tileArea.Height * Main.maxTilesX;
 			int botY = tileArea.Bottom;
@@ -66,10 +66,10 @@ namespace TerrainRemixer {
 		////////////////
 
 		public Rectangle GetVerticalTileRange( TerrainRemixerGenPassSpec passSpec ) {
-			int leftX = (int)(passSpec.BoundsLeftPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsLeftTileOffset;
-			int rightX = (int)(passSpec.BoundsRightPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsRightTileOffset;
-			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsTopStart) + passSpec.BoundsTopTileOffset;
-			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsBottomStart) + passSpec.BoundsBottomTileOffset;
+			int leftX = (int)(passSpec.BoundsLeftPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsLeftTilePadding;
+			int rightX = (int)(passSpec.BoundsRightPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsRightTilePadding;
+			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsTopStart) + passSpec.BoundsTopTilePadding;
+			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsBottomStart) + passSpec.BoundsBottomTilePadding;
 			return new Rectangle(
 				x: leftX,
 				y: topY,
