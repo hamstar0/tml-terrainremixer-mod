@@ -1,11 +1,18 @@
-v1.1
+v2
 -	Extend API
 	-	Add method for supplying noise data
 	-	Add config setting for picking source of noise data
-v1
+-	Add density variance function
+-	Implement painter
 -	Implement Filter setting
--	@Test fade
 
+
+
+v1
+-	Add tooltips to config
+-	Implement horizontal bounds (left%, right%)
+
+-	@Test fade
 -	Implement fade settings
 -	Add settings to adjust fade range
 -	Add API
