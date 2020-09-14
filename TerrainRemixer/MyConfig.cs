@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using HamstarHelpers.Services.Configs;
 using HamstarHelpers.Classes.UI.ModConfig;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET.Reflection;
@@ -14,8 +14,8 @@ namespace TerrainRemixer {
 
 
 	[Label( "Config" )]
-	public partial class TerrainRemixerConfig : StackableModConfig {
-		public static TerrainRemixerConfig Instance => ModConfigStack.GetMergedConfigs<TerrainRemixerConfig>();
+	public partial class TerrainRemixerConfig : ModConfig {
+		public static TerrainRemixerConfig Instance => ModContent.GetInstance<TerrainRemixerConfig>();
 
 
 

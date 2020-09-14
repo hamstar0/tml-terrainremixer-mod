@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using FastNoiseCSharp;
 using Terraria;
 using Terraria.World.Generation;
 using HamstarHelpers.Helpers.Debug;
-using FastNoiseCSharp;
-
+using System.Collections.Generic;
 
 namespace TerrainRemixer {
 	partial class TerrainRemixerGenPass : GenPass {
@@ -15,11 +15,12 @@ namespace TerrainRemixer {
 
 		public override void Apply( GenerationProgress progress ) {
 			var config = TerrainRemixerConfig.Instance;
+			var passes = config.Get<List<TerrainRemixerGenPassSpec>>( nameof(TerrainRemixerConfig.Passes) );
 
 			progress.Message = "Remixing Terrain";   //Lang.gen[76].Value+"..Thin Ice"
 
-			for( int i=0; i<config.Passes.Count; i++ ) {
-				this.ApplyPass( progress, config.Passes[i] );
+			for( int i=0; i<passes.Count; i++ ) {
+				this.ApplyPass( progress, passes[i] );
 			}
 
 			progress.Set( 1f );
@@ -29,8 +30,12 @@ namespace TerrainRemixer {
 		private void ApplyPass( GenerationProgress progress, TerrainRemixerGenPassSpec passSpec ) {
 			Rectangle tileArea = this.GetRegion( passSpec );
 
-			FastNoise noise;
-			var map = TerrainRemixerGenPass.GetNoiseMap( Main.maxTilesX, tileArea.Height, passSpec.NoiseScale, out noise );
+			(float[], float, float) map = TerrainRemixerGenPass.GetNoiseMap(
+				Main.maxTilesX,
+				tileArea.Height,
+				passSpec.NoiseScale,
+				out FastNoise _
+			);
 
 			float totalTiles = tileArea.Height * Main.maxTilesX;
 			int botY = tileArea.Bottom;
@@ -38,27 +43,39 @@ namespace TerrainRemixer {
 
 			for( int y = tileArea.Y; y < botY; y++ ) {
 				for( int x = tileArea.X; x < rightX; x++ ) {
-					Tile tile = Main.tile[x, y];
-					if( tile?.active() != true ) { continue; }
-					
-					float noiseStrPerc = this.GetRemixerNoiseStrengthPercent( passSpec, tileArea, x, y );    //x, y, topY, botY
-
-					//float val = noise.GetNoise( x, y );
-					float randVal = map.map[ TerrainRemixerGenPass.GetMapCoord(x, y, tileArea.Y) ];
-					randVal -= map.minVal;
-					randVal /= map.maxVal - map.minVal;
-
-					// Check API or else apply fade amounts according to spec
-					if( !TerrainRemixerAPI.ApplyTileRemixers(passSpec, x, y, ref noiseStrPerc, ref randVal) ) {
-						float noiseMin = passSpec.NoiseValueMinimumUntilTileRemoval * noiseStrPerc;
-
-						this.ApplyRemixingToTile( tile, randVal, noiseMin );
-					}
+					this.ApplyPassToTile( passSpec, tileArea, map, x, y );
 
 					// Update progress:
 					float currTile = x + ((y - tileArea.Y) * Main.maxTilesX);
 					progress.Set( currTile / totalTiles );
 				}
+			}
+		}
+
+		private void ApplyPassToTile(
+					TerrainRemixerGenPassSpec passSpec,
+					Rectangle tileArea,
+					(float[] map, float minVal, float maxVal) noiseMap,
+					int tileX,
+					int tileY ) {
+			Tile tile = Main.tile[tileX, tileY];
+			if( tile?.active() != true ) {
+				return;
+			}
+
+			float noiseStrPerc = this.GetRemixerNoiseStrengthPercent( passSpec, tileArea, tileX, tileY );
+
+			//float val = noise.GetNoise( x, y );
+			int coord = TerrainRemixerGenPass.GetMapCoord( tileX, tileY, tileArea.Y );
+			float randVal = noiseMap.map[ coord ];
+			randVal -= noiseMap.minVal;
+			randVal /= noiseMap.maxVal - noiseMap.minVal;
+
+			// Check API or else apply fade amounts according to spec
+			if( !TerrainRemixerAPI.ApplyTileRemixers(passSpec, tileX, tileY, ref noiseStrPerc, ref randVal) ) {
+				float noiseMin = passSpec.NoiseValueMinimumUntilTileRemoval * noiseStrPerc;
+
+				this.ApplyRemixingToTile( tile, randVal, noiseMin );
 			}
 		}
 		

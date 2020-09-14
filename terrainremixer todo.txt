@@ -1,12 +1,14 @@
-v2
--	Extend API
-	-	Add method for supplying noise data
-	-	Add config setting for picking source of noise data
--	Add density variance function
--	Implement painter
--	Implement Filter setting
-
 v1
+-	@Experiment with noise settings
+v0.8
+-	Implement layer setting
+v0.7
+-	Implement shape blending
+-	Implement shape API
+-	Implement fill
+-	Implement filter setting
+
+v0.6.3
 -	Add tooltips to config
 -	Implement horizontal bounds (left%, right%)
 -	@Test fade

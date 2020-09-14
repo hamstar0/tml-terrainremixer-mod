@@ -2,11 +2,14 @@
 using System.ComponentModel;
 using Terraria;
 using Terraria.ModLoader.Config;
+using HamstarHelpers.Classes.Tiles.TilePattern;
 
 
 namespace TerrainRemixer {
 	public partial class TerrainRemixerGenPassSpec {
-		//public TilePatternConfig Filter { get; set; }
+		public TilePatternConfig Filter { get; set; } = new TilePatternConfig(
+			new TilePatternBuilder { IsActive = true }
+		);
 
 
 		////
