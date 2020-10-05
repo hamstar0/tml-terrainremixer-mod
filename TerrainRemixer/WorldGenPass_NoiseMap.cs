@@ -7,12 +7,21 @@ using FastNoiseCSharp;
 
 namespace TerrainRemixer {
 	partial class TerrainRemixerGenPass : GenPass {
-		public static (float[] map, float minVal, float maxVal) GetNoiseMap( int width, int height, float scale, out FastNoise noise ) {
+		public static (float[] map, float minVal, float maxVal) GetNoiseMap(
+					int width,
+					int height,
+					float frequency,
+					bool isWorms,
+					float sharpness,
+					//bool isPerturbed,
+					out FastNoise noise ) {
 			float[] map = new float[ width * height ];
 
 			noise = new FastNoise( WorldGen.genRand.Next() );
 			noise.SetNoiseType( FastNoise.NoiseType.SimplexFractal );
-			noise.SetFrequency( scale );
+			noise.SetFrequency( frequency );
+			noise.SetFractalType( isWorms ? FastNoise.FractalType.RigidMulti : FastNoise.FractalType.FBM );
+			noise.SetFractalGain( sharpness );
 
 			int coord;
 			float min = 0, max = 0, val;

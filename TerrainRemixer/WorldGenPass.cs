@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using FastNoiseCSharp;
 using Terraria;
 using Terraria.World.Generation;
 using HamstarHelpers.Helpers.Debug;
-using System.Collections.Generic;
+
 
 namespace TerrainRemixer {
 	partial class TerrainRemixerGenPass : GenPass {
@@ -15,7 +16,7 @@ namespace TerrainRemixer {
 
 		public override void Apply( GenerationProgress progress ) {
 			var config = TerrainRemixerConfig.Instance;
-			var passes = config.Get<List<TerrainRemixerGenPassSpec>>( nameof(TerrainRemixerConfig.Passes) );
+			var passes = config.Get<List<TerrainRemixerGenPassSpec>>( nameof(config.Passes) );
 
 			progress.Message = "Remixing Terrain";   //Lang.gen[76].Value+"..Thin Ice"
 
@@ -33,7 +34,10 @@ namespace TerrainRemixer {
 			(float[], float, float) map = TerrainRemixerGenPass.GetNoiseMap(
 				Main.maxTilesX,
 				tileArea.Height,
-				passSpec.NoiseScale,
+				passSpec.NoiseFrequency,
+				passSpec.IsWorms,
+				passSpec.Sharpness,
+				//passSpec.IsPerturbed,
 				out FastNoise _
 			);
 
@@ -87,6 +91,16 @@ namespace TerrainRemixer {
 			int rightX = (int)(passSpec.BoundsRightPercentStart * (float)(Main.maxTilesX-1)) + passSpec.BoundsRightTileOffset;
 			int topY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsTopStart) + passSpec.BoundsTopTileOffset;
 			int botY = TerrainRemixerGenPassSpec.GetDepthTile(passSpec.BoundsBottomStart) + passSpec.BoundsBottomTileOffset;
+
+			float topPerc = passSpec.BoundsTopPercentStart;
+			float botPerc = passSpec.BoundsBottomPercentStart;
+			int topRange = TerrainRemixerGenPassSpec.GetDepthTile( passSpec.BoundsTopStart + 1 )
+				- TerrainRemixerGenPassSpec.GetDepthTile( passSpec.BoundsTopStart );
+			int botRange = TerrainRemixerGenPassSpec.GetDepthTile( passSpec.BoundsBottomStart )
+				- TerrainRemixerGenPassSpec.GetDepthTile( passSpec.BoundsBottomStart - 1 );
+
+			topY += (int)(topPerc * (float)topRange);
+			botY -= (int)(botPerc * (float)botRange);
 
 			return new Rectangle(
 				x: Math.Max( leftX, 0 ),

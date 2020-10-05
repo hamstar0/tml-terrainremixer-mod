@@ -45,16 +45,6 @@ namespace TerrainRemixer {
 		////////////////
 
 		[Header( "Regions" )]
-		[Range( -4000, 4000 )]
-		[DefaultValue( 0 )]
-		public int BoundsTopTileOffset { get; set; } = 0;
-
-		[Range( -4000, 4000 )]
-		[DefaultValue( 0 )]
-		public int BoundsBottomTileOffset { get; set; } = 0;
-
-		////
-
 		[DrawTicks]
 		[JsonConverter( typeof( StringEnumConverter ) )]
 		[DefaultValue( WorldDepth.SurfaceTop )]
@@ -80,6 +70,28 @@ namespace TerrainRemixer {
 			}
 		}
 		private WorldDepth _BoundsBottomStart = WorldDepth.UnderworldTop;
+
+		////
+
+		[Range( -4000, 4000 )]
+		[DefaultValue( 0 )]
+		public int BoundsTopTileOffset { get; set; } = 0;
+
+		[Range( -4000, 4000 )]
+		[DefaultValue( 0 )]
+		public int BoundsBottomTileOffset { get; set; } = 0;
+
+		////
+
+		[Tooltip( "Percent from the current world region's top to begin at" )]
+		[Range( 0f, 1f )]
+		[DefaultValue( 0f )]
+		public float BoundsTopPercentStart { get; set; } = 0f;
+
+		[Tooltip( "Percent from the current world region's bottom to begin at" )]
+		[Range( 0f, 1f )]
+		[DefaultValue( 0f )]
+		public float BoundsBottomPercentStart { get; set; } = 0f;
 
 		////////////////
 

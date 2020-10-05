@@ -14,11 +14,25 @@ namespace TerrainRemixer {
 
 		////
 
-		[Tooltip( "\"Scale\" value given to the noise algorithm. \nSmaller = more dramatic." )]
-		[Range( 0.0001f, 1f )]
+		[Tooltip( "A \"scale\" value given to the noise algorithm. \nSmaller = more dramatic." )]
+		[Range( 0.0001f, 0.3f )]
 		[DefaultValue( 0.01f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float NoiseScale { get; set; } = 0.01f;
+		public float NoiseFrequency { get; set; } = 0.01f;
+
+		[Tooltip( "Switches to a fractal mode that makes the generation more worm-like." )]
+		[DefaultValue( false )]
+		public bool IsWorms { get; set; } = false;
+
+		[Tooltip( "A \"sharpness\" value given to the noise algorithm. \nSmaller = more blurry." )]
+		[Range( 0f, 5f )]
+		[DefaultValue( 0.5f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float Sharpness { get; set; } = 0.5f;
+
+		//[Tooltip( "Applies 'gradient perturb' to make a more wavy result." )]
+		//[DefaultValue( false )]
+		//public bool IsPerturbed { get; set; } = false;
 
 
 		////

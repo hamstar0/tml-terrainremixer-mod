@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using HamstarHelpers.Classes.UI.ModConfig;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.DotNET.Reflection;
 
 
 namespace TerrainRemixer {
@@ -27,20 +26,12 @@ namespace TerrainRemixer {
 
 		////////////////
 
-		public List<TerrainRemixerGenPassSpec> Passes { get; set; } = new List<TerrainRemixerGenPassSpec>();
-
-
-
-		////////////////
-
-		public void Initialize() {
-			this.Passes.Clear();
-			
-			this.Passes.Add( new TerrainRemixerGenPassSpec {
+		public List<TerrainRemixerGenPassSpec> Passes { get; set; } = new List<TerrainRemixerGenPassSpec> {
+			new TerrainRemixerGenPassSpec {
 				GensAfterLayer = true,
 				LayerName = "Terrain",
 				//Filter = new TilePatternConfig( new TilePatternBuilder { IsActive = true } ),
-				NoiseScale = 0.01f,
+				NoiseFrequency = 0.01f,
 				NoiseValueMinimumUntilTileRemoval = 0.6f,
 				BoundsTopStart = WorldDepth.SurfaceTop,
 				BoundsBottomStart = WorldDepth.UnderworldTop,
@@ -48,11 +39,11 @@ namespace TerrainRemixer {
 				VerticalDistancePercentFromCenterBeforeBlending = 0.7f,
 				BoundsLeftPercentStart = 0.48f,
 				BoundsRightPercentStart = 0.52f,
-			} );
-			this.Passes.Add( new TerrainRemixerGenPassSpec {
+			},
+			new TerrainRemixerGenPassSpec {
 				GensAfterLayer = true,
 				LayerName = "Terrain",
-				NoiseScale = 0.01f,
+				NoiseFrequency = 0.01f,
 				NoiseValueMinimumUntilTileRemoval = 0.65f,
 				BoundsTopStart = WorldDepth.UndergroundRockTop,
 				BoundsBottomStart = WorldDepth.UnderworldTop,
@@ -62,12 +53,7 @@ namespace TerrainRemixer {
 				BoundsRightPercentStart = 0.8f,
 				BoundsTopTileOffset = 200,
 				BoundsBottomTileOffset = -200,
-			} );
-
-			object _;
-			if( !ReflectionHelpers.RunMethod( typeof(ConfigManager), null, "Save", new object[] { this }, out _ ) ) {
-				LogHelpers.Alert( "Could not save config defaults." );
 			}
-		}
+		};
 	}
 }
