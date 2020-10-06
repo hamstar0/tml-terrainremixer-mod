@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using FastNoiseCSharp;
 using Terraria;
 using Terraria.ModLoader.Config;
 using HamstarHelpers.Classes.Tiles.TilePattern;
@@ -20,9 +21,9 @@ namespace TerrainRemixer {
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float NoiseFrequency { get; set; } = 0.01f;
 
-		[Tooltip( "Switches to a fractal mode that makes the generation more worm-like." )]
-		[DefaultValue( false )]
-		public bool IsWorms { get; set; } = false;
+		[Tooltip( "Picks between fractal modes that can make the generation more worm-like." )]
+		[DefaultValue( FastNoise.FractalType.FBM )]
+		public FastNoise.FractalType WormsMode { get; set; } = FastNoise.FractalType.FBM;
 
 		[Tooltip( "A \"sharpness\" value given to the noise algorithm. \nSmaller = more blurry." )]
 		[Range( 0f, 5f )]

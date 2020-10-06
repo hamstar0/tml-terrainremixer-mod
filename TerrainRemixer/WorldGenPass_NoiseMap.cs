@@ -11,7 +11,7 @@ namespace TerrainRemixer {
 					int width,
 					int height,
 					float frequency,
-					bool isWorms,
+					FastNoise.FractalType wormsMode,
 					float sharpness,
 					//bool isPerturbed,
 					out FastNoise noise ) {
@@ -20,7 +20,7 @@ namespace TerrainRemixer {
 			noise = new FastNoise( WorldGen.genRand.Next() );
 			noise.SetNoiseType( FastNoise.NoiseType.SimplexFractal );
 			noise.SetFrequency( frequency );
-			noise.SetFractalType( isWorms ? FastNoise.FractalType.RigidMulti : FastNoise.FractalType.FBM );
+			noise.SetFractalType( wormsMode );
 			noise.SetFractalGain( sharpness );
 
 			int coord;

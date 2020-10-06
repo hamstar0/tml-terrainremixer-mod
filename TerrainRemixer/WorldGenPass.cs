@@ -35,7 +35,7 @@ namespace TerrainRemixer {
 				Main.maxTilesX,
 				tileArea.Height,
 				passSpec.NoiseFrequency,
-				passSpec.IsWorms,
+				passSpec.WormsMode,
 				passSpec.Sharpness,
 				//passSpec.IsPerturbed,
 				out FastNoise _
