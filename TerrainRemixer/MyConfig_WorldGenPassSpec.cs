@@ -1,12 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
-using FastNoiseCSharp;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.Config;
 using HamstarHelpers.Classes.Tiles.TilePattern;
 
 
 namespace TerrainRemixer {
+	public enum FractalType {
+		FBM = 0,
+		Billow = 1,
+		RigidMulti = 2
+	}
+
+
+
+
 	public partial class TerrainRemixerGenPassSpec {
 		public TilePatternConfig Filter { get; set; } = new TilePatternConfig(
 			new TilePatternBuilder { IsActive = true }
@@ -22,8 +31,8 @@ namespace TerrainRemixer {
 		public float NoiseFrequency { get; set; } = 0.01f;
 
 		[Tooltip( "Picks between fractal modes that can make the generation more worm-like." )]
-		[DefaultValue( FastNoise.FractalType.FBM )]
-		public FastNoise.FractalType WormsMode { get; set; } = FastNoise.FractalType.FBM;
+		[DefaultValue( FractalType.FBM )]
+		public FractalType WormsMode { get; set; } = FractalType.FBM;
 
 		[Tooltip( "A \"sharpness\" value given to the noise algorithm. \nSmaller = more blurry." )]
 		[Range( 0f, 5f )]
@@ -58,6 +67,14 @@ namespace TerrainRemixer {
 		[DefaultValue( 0.7f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float HorizontalDistancePercentFromCenterBeforeBlending { get; set; } = 0.7f;
+
+		////
+
+		[Tooltip( "A selection of tile types to randomly pick from when painting noise. `-1` is air." )]
+		public List<int> FillTiles { get; set; } = new List<int> { -1 };
+
+		[Tooltip( "A selection of wall types to randomly pick from when painting noise." )]
+		public List<int> FillWalls { get; set; } = new List<int> { };
 
 
 

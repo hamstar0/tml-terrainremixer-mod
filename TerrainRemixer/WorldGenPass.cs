@@ -35,7 +35,7 @@ namespace TerrainRemixer {
 				Main.maxTilesX,
 				tileArea.Height,
 				passSpec.NoiseFrequency,
-				passSpec.WormsMode,
+				(FastNoise.FractalType)passSpec.WormsMode,
 				passSpec.Sharpness,
 				//passSpec.IsPerturbed,
 				out FastNoise _
@@ -79,7 +79,9 @@ namespace TerrainRemixer {
 			if( !TerrainRemixerAPI.ApplyTileRemixers(passSpec, tileX, tileY, ref noiseStrPerc, ref randVal) ) {
 				float noiseMin = passSpec.NoiseValueMinimumUntilTileRemoval * noiseStrPerc;
 
-				this.ApplyRemixingToTile( tile, randVal, noiseMin );
+				if( randVal < noiseMin ) {
+					this.ApplyPassFillToTile( passSpec, tile );
+				}
 			}
 		}
 		
@@ -148,17 +150,32 @@ namespace TerrainRemixer {
 
 		////
 
-		private void ApplyRemixingToTile(
-					Tile tile,
-					float noiseVal,
-					float minPercThreshWhileSolid ) {
-			if( noiseVal < minPercThreshWhileSolid ) {
-				tile.active( false );
-				tile.wall = 0;
-				tile.wallColor( 0 );
-				tile.wallFrameNumber( 0 );
-				tile.wallFrameX( 0 );
-				tile.wallFrameY( 0 );
+		private void ApplyPassFillToTile( TerrainRemixerGenPassSpec passSpec, Tile tile ) {
+			if( passSpec.FillTiles.Count > 0 ) {
+				int whichFill = WorldGen.genRand.Next( passSpec.FillTiles.Count );
+				int tileType = passSpec.FillTiles[whichFill];
+
+				if( tileType < 0 ) {
+					tile.active( false );
+				} else {
+					tile.active( true );
+					tile.type = (ushort)tileType;
+				}
+			}
+
+			if( passSpec.FillWalls.Count > 0 ) {
+				int whichFill = WorldGen.genRand.Next( passSpec.FillWalls.Count );
+				int wallType = passSpec.FillWalls[whichFill];
+
+				if( wallType < 0 ) {
+					tile.wall = 0;
+					tile.wallColor( 0 );
+					tile.wallFrameNumber( 0 );
+					tile.wallFrameX( 0 );
+					tile.wallFrameY( 0 );
+				} else {
+					tile.wall = (ushort)wallType;
+				}
 			}
 		}
 	}

@@ -39,6 +39,8 @@ namespace TerrainRemixer {
 				VerticalDistancePercentFromCenterBeforeBlending = 0.7f,
 				BoundsLeftPercentStart = 0.48f,
 				BoundsRightPercentStart = 0.52f,
+				FillTiles = new List<int> { -1 },
+				FillWalls = new List<int> { }
 			},
 			new TerrainRemixerGenPassSpec {
 				GensAfterLayer = true,
@@ -53,6 +55,8 @@ namespace TerrainRemixer {
 				BoundsRightPercentStart = 0.8f,
 				BoundsTopTileOffset = 200,
 				BoundsBottomTileOffset = -200,
+				FillTiles = new List<int> { -1 },
+				FillWalls = new List<int> { }
 			}
 		};
 	}
