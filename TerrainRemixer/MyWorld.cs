@@ -9,16 +9,31 @@ using HamstarHelpers.Helpers.Debug;
 namespace TerrainRemixer {
 	class TerrainRemixerWorld : ModWorld {
 		public override void ModifyWorldGenTasks( List<GenPass> tasks, ref float totalWeight ) {
-			int idx = tasks.FindIndex( t => t.Name == "Terrain" );
-			if( idx == -1 ) {
-				idx = 1;
+			TerrainRemixerGenPass pass;
+
+			for( int i=0; i<tasks.Count; i++ ) {
+				string currPassName = tasks[i].Name;
+				pass = TerrainRemixerGenPass.CreatePass(
+					currPassName,
+					"Adding Noise (before '"+currPassName+"')"
+				);
+
+				if( pass != null ) {
+					tasks.Insert( i, pass );
+					totalWeight += pass.Weight;
+					i++;
+				}
 			}
 
-			var pass = new TerrainRemixerGenPass();
+			pass = TerrainRemixerGenPass.CreatePass(
+				"Post Generation",  // denotes end of vanilla list
+				"Adding Noise (final)"
+			);
 
-			tasks.Insert( idx + 1, pass );
-
-			totalWeight += pass.Weight;
+			if( pass != null ) {
+				tasks.Add( pass );
+				totalWeight += pass.Weight;
+			}
 		}
 	}
 }

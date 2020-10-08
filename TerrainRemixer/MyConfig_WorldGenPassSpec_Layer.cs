@@ -5,11 +5,6 @@ using Terraria.ModLoader.Config;
 
 namespace TerrainRemixer {
 	public partial class TerrainRemixerGenPassSpec {
-		[Header( "World Gen Pass Layer" )]
-		[Tooltip( "Indicates to apply this pass after the given layer (LayerName)" )]
-		[DefaultValue( true )]
-		public bool GensAfterLayer { get; set; } = true;
-
 		[Tooltip( "Existing world gen layer to run this 'pass' upon" )]
 		[DrawTicks]
 		[OptionStrings( new string[] {
@@ -108,9 +103,11 @@ namespace TerrainRemixer {
 			"Tile Cleanup",
 			"Lihzahrd Altars",
 			"Micro Biomes",
-			"Final Cleanup" } )]
+			"Final Cleanup",
+			"Post Generation"
+		} )]
 		[DefaultValue( "Terrain" )]
-		public string LayerName { get; set; }
+		public string LayerName { get; set; } = "Terrain";
 
 		////
 

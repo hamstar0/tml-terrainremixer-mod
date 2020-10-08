@@ -26,10 +26,11 @@ namespace TerrainRemixer {
 
 		////////////////
 
+		public bool DebugModeInfo { get; set; } = false;
+
 		public List<TerrainRemixerGenPassSpec> Passes { get; set; } = new List<TerrainRemixerGenPassSpec> {
 			new TerrainRemixerGenPassSpec {
-				GensAfterLayer = true,
-				LayerName = "Terrain",
+				LayerName = "Tunnels",
 				//Filter = new TilePatternConfig( new TilePatternBuilder { IsActive = true } ),
 				NoiseFrequency = 0.01f,
 				NoiseValueMinimumUntilTileRemoval = 0.6f,
@@ -43,8 +44,7 @@ namespace TerrainRemixer {
 				FillWalls = new List<int> { }
 			},
 			new TerrainRemixerGenPassSpec {
-				GensAfterLayer = true,
-				LayerName = "Terrain",
+				LayerName = "Tunnels",
 				NoiseFrequency = 0.01f,
 				NoiseValueMinimumUntilTileRemoval = 0.65f,
 				BoundsTopStart = WorldDepth.UndergroundRockTop,

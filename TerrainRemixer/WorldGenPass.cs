@@ -9,19 +9,45 @@ using HamstarHelpers.Helpers.Debug;
 
 namespace TerrainRemixer {
 	partial class TerrainRemixerGenPass : GenPass {
-		internal TerrainRemixerGenPass() : base( "Remixing Terrain", 1f ) { }
+		public static TerrainRemixerGenPass CreatePass( string currentPassName, string newPassName ) {
+			var config = TerrainRemixerConfig.Instance;
+			var passDefs = new List<TerrainRemixerGenPassSpec>();
+
+			foreach( TerrainRemixerGenPassSpec passDef in config.Passes ) {
+				if( passDef.LayerName == currentPassName ) {
+					passDefs.Add( passDef );
+				}
+			}
+
+			if( passDefs.Count == 0 ) {
+				return null;
+			}
+
+			return new TerrainRemixerGenPass( newPassName, passDefs );
+		}
+
+
+
+		////////////////
+
+		private IList<TerrainRemixerGenPassSpec> PassDefs;
+
+
+
+		////////////////
+
+		private TerrainRemixerGenPass( string name, IList<TerrainRemixerGenPassSpec> passDefs ) : base( name, 1f ) {
+			this.PassDefs = passDefs;
+		}
 
 
 		////
 
 		public override void Apply( GenerationProgress progress ) {
-			var config = TerrainRemixerConfig.Instance;
-			var passes = config.Get<List<TerrainRemixerGenPassSpec>>( nameof(config.Passes) );
+			progress.Message = this.Name;   //Lang.gen[76].Value+"..Thin Ice"
 
-			progress.Message = "Remixing Terrain";   //Lang.gen[76].Value+"..Thin Ice"
-
-			for( int i=0; i<passes.Count; i++ ) {
-				this.ApplyPass( progress, passes[i] );
+			for( int i=0; i< this.PassDefs.Count; i++ ) {
+				this.ApplyPass( progress, this.PassDefs[i] );
 			}
 
 			progress.Set( 1f );
@@ -29,7 +55,13 @@ namespace TerrainRemixer {
 
 
 		private void ApplyPass( GenerationProgress progress, TerrainRemixerGenPassSpec passSpec ) {
+			var config = TerrainRemixerConfig.Instance;
 			Rectangle tileArea = this.GetRegion( passSpec );
+
+			var then = DateTime.UtcNow;
+			if( config.DebugModeInfo ) {
+				LogHelpers.Log( "Applying pass "+this.Name+" to "+tileArea.ToString() );
+			}
 
 			(float[], float, float) map = TerrainRemixerGenPass.GetNoiseMap(
 				Main.maxTilesX,
@@ -53,6 +85,11 @@ namespace TerrainRemixer {
 					float currTile = x + ((y - tileArea.Y) * Main.maxTilesX);
 					progress.Set( currTile / totalTiles );
 				}
+			}
+
+			var now = DateTime.UtcNow;
+			if( config.DebugModeInfo ) {
+				LogHelpers.Log( " Applied pass "+this.Name+": "+(now - then).TotalSeconds+"s" );
 			}
 		}
 
@@ -151,9 +188,17 @@ namespace TerrainRemixer {
 		////
 
 		private void ApplyPassFillToTile( TerrainRemixerGenPassSpec passSpec, Tile tile ) {
+/*tile.active( false );
+tile.wall = 0;
+tile.wallColor( 0 );
+tile.wallFrameNumber( 0 );
+tile.wallFrameX( 0 );
+tile.wallFrameY( 0 );*/
 			if( passSpec.FillTiles.Count > 0 ) {
 				int whichFill = WorldGen.genRand.Next( passSpec.FillTiles.Count );
-				int tileType = passSpec.FillTiles[whichFill];
+				whichFill = Math.Max( whichFill, passSpec.FillTiles.Count - 1 );
+
+				int tileType = passSpec.FillTiles[ whichFill ];
 
 				if( tileType < 0 ) {
 					tile.active( false );
@@ -165,16 +210,18 @@ namespace TerrainRemixer {
 
 			if( passSpec.FillWalls.Count > 0 ) {
 				int whichFill = WorldGen.genRand.Next( passSpec.FillWalls.Count );
-				int wallType = passSpec.FillWalls[whichFill];
+				whichFill = Math.Max( whichFill, passSpec.FillWalls.Count - 1 );
 
-				if( wallType < 0 ) {
+				int wallType = passSpec.FillWalls[ whichFill ];
+
+				if( wallType > 0 ) {
+					tile.wall = (ushort)wallType;
+				} else if( wallType == 0 ) {
 					tile.wall = 0;
 					tile.wallColor( 0 );
 					tile.wallFrameNumber( 0 );
 					tile.wallFrameX( 0 );
 					tile.wallFrameY( 0 );
-				} else {
-					tile.wall = (ushort)wallType;
 				}
 			}
 		}
