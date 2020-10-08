@@ -12,8 +12,9 @@ namespace TerrainRemixer {
 		public static TerrainRemixerGenPass CreatePass( string currentPassName, string newPassName ) {
 			var config = TerrainRemixerConfig.Instance;
 			var passDefs = new List<TerrainRemixerGenPassSpec>();
+			var allPassDefs = config.Get<List<TerrainRemixerGenPassSpec>>( nameof(config.Passes) );
 
-			foreach( TerrainRemixerGenPassSpec passDef in config.Passes ) {
+			foreach( TerrainRemixerGenPassSpec passDef in allPassDefs ) {
 				if( passDef.LayerName == currentPassName ) {
 					passDefs.Add( passDef );
 				}
