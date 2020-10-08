@@ -100,11 +100,7 @@ namespace TerrainRemixer {
 					(float[] map, float minVal, float maxVal) noiseMap,
 					int tileX,
 					int tileY ) {
-			Tile tile = Main.tile[tileX, tileY];
-			if( tile?.active() != true ) {
-				return;
-			}
-
+			Tile tile = Framing.GetTileSafely( tileX, tileY );
 			float noiseStrPerc = this.GetRemixerNoiseStrengthPercent( passSpec, tileArea, tileX, tileY );
 
 			//float val = noise.GetNoise( x, y );
