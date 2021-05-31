@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria.ModLoader;
-using HamstarHelpers.Classes.Loadable;
+using ModLibsCore.Classes.Loadable;
 
 
 namespace TerrainRemixer {

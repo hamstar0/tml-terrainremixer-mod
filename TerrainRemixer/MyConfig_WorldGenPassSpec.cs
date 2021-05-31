@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.Config;
-using HamstarHelpers.Classes.Tiles.TilePattern;
+using ModLibsTiles.Classes.Tiles.TilePattern;
 
 
 namespace TerrainRemixer {

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using Terraria;
 using Terraria.ModLoader.Config;
-using HamstarHelpers.Helpers.World;
+using ModLibsGeneral.Libraries.World;
 
 
 namespace TerrainRemixer {
@@ -26,13 +26,13 @@ namespace TerrainRemixer {
 			case WorldDepth.SkyTop:
 				return 0;
 			case WorldDepth.SurfaceTop:
-				return WorldHelpers.SurfaceLayerTopTileY;
+				return WorldLocationLibraries.SurfaceLayerTopTileY;
 			case WorldDepth.UndergroundDirtTop:
-				return WorldHelpers.DirtLayerTopTileY;
+				return WorldLocationLibraries.DirtLayerTopTileY;
 			case WorldDepth.UndergroundRockTop:
-				return WorldHelpers.RockLayerTopTileY;
+				return WorldLocationLibraries.RockLayerTopTileY;
 			case WorldDepth.UnderworldTop:
-				return WorldHelpers.UnderworldLayerTopTileY;
+				return WorldLocationLibraries.UnderworldLayerTopTileY;
 			case WorldDepth.Bottom:
 				return Main.maxTilesY - 1;
 			default:

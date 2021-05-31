@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using FastNoiseCSharp;
 using Terraria;
 using Terraria.World.Generation;
-using HamstarHelpers.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace TerrainRemixer {
@@ -61,7 +61,7 @@ namespace TerrainRemixer {
 
 			var then = DateTime.UtcNow;
 			if( config.DebugModeInfo ) {
-				LogHelpers.Log( "Applying pass "+this.Name+" to "+tileArea.ToString() );
+				LogLibraries.Log( "Applying pass "+this.Name+" to "+tileArea.ToString() );
 			}
 
 			(float[], float, float) map = TerrainRemixerGenPass.GetNoiseMap(
@@ -90,7 +90,7 @@ namespace TerrainRemixer {
 
 			var now = DateTime.UtcNow;
 			if( config.DebugModeInfo ) {
-				LogHelpers.Log( " Applied pass "+this.Name+": "+(now - then).TotalSeconds+"s" );
+				LogLibraries.Log( " Applied pass "+this.Name+": "+(now - then).TotalSeconds+"s" );
 			}
 		}
 
