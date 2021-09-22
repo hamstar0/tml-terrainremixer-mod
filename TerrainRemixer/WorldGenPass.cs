@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using FastNoiseCSharp;
 using Terraria;
 using Terraria.World.Generation;
+using FastNoiseCSharp;
 using ModLibsCore.Libraries.Debug;
 
 
 namespace TerrainRemixer {
 	partial class TerrainRemixerGenPass : GenPass {
 		public static TerrainRemixerGenPass CreatePass( string currentPassName, string newPassName ) {
-			var config = TerrainRemixerConfig.Instance;
 			var passDefs = new List<TerrainRemixerGenPassSpec>();
+
+			var config = TerrainRemixerConfig.Instance;
 			var allPassDefs = config.Get<List<TerrainRemixerGenPassSpec>>( nameof(config.Passes) );
+
+			//
+
+			passDefs.AddRange( TerrainRemixerAPI.GetCustomPasses() );
+
+			//
 
 			foreach( TerrainRemixerGenPassSpec passDef in allPassDefs ) {
 				if( passDef.LayerName == currentPassName ) {

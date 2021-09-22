@@ -28,6 +28,8 @@ namespace TerrainRemixer {
 
 		public bool DebugModeInfo { get; set; } = false;
 
+		////
+
 		public List<TerrainRemixerGenPassSpec> Passes { get; set; } = new List<TerrainRemixerGenPassSpec> {
 			new TerrainRemixerGenPassSpec {
 				LayerName = "Tunnels",

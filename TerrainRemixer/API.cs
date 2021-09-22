@@ -24,7 +24,11 @@ namespace TerrainRemixer {
 
 
 
-	public class TerrainRemixerAPI : ILoadable {
+	public partial class TerrainRemixerAPI : ILoadable {
+		/// <summary>
+		/// Adds hooks to allow for adjusting (remixing) terrain noise values during gen.
+		/// </summary>
+		/// <param name="remixer"></param>
 		public static void AddTileRemixer( TileRemixer remixer ) {
 			var api = ModContent.GetInstance<TerrainRemixerAPI>();
 
@@ -33,36 +37,15 @@ namespace TerrainRemixer {
 
 
 		////////////////
-		
-		internal static bool ApplyTileRemixers(
-					TerrainRemixerGenPassSpec passSpec,
-					int tileX,
-					int tileY,
-					ref float noiseStrength,
-					ref float randVal ) {
+
+		/// <summary>
+		/// Allows adding hooks to dynamically supply gen pass specs (e.g. to supply specs tailored for world size, crimson, etc.).
+		/// </summary>
+		/// <param name="remixer"></param>
+		public static void AddPassHook( Func<TerrainRemixerGenPassSpec> hook ) {
 			var api = ModContent.GetInstance<TerrainRemixerAPI>();
 
-			foreach( TileRemixer remixer in api.TileRemixers ) {
-				if( remixer(passSpec, tileX, tileY, ref noiseStrength, ref randVal) ) {
-					return true;
-				}
-			}
-
-			return false;
+			api.PassHooks.Add( hook );
 		}
-
-
-
-		////////////////
-
-		private IList<TileRemixer> TileRemixers = new List<TileRemixer>();
-
-
-
-		////////////////
-
-		void ILoadable.OnModsLoad() { }
-		void ILoadable.OnModsUnload() { }
-		void ILoadable.OnPostModsLoad() { }
 	}
 }
