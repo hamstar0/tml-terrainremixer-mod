@@ -23,14 +23,20 @@ namespace TerrainRemixer {
 			return false;
 		}
 
-		internal static IEnumerable<TerrainRemixerGenPassSpec> GetCustomPasses() {
+		internal static IEnumerable<TerrainRemixerGenPassSpec> GetCustomPasses( string currentPassName=null ) {
 			var api = ModContent.GetInstance<TerrainRemixerAPI>();
 
 			foreach( Func<TerrainRemixerGenPassSpec> hook in api.PassHooks ) {
 				TerrainRemixerGenPassSpec spec = hook.Invoke();
-				if( spec != null ) {
-					yield return spec;
+				if( spec == null ) {
+					continue;
 				}
+
+				if( currentPassName != null && spec.LayerName != currentPassName ) {
+					continue;
+				}
+
+				yield return spec;
 			}
 		}
 

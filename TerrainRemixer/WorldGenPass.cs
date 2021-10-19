@@ -17,7 +17,7 @@ namespace TerrainRemixer {
 
 			//
 
-			passDefs.AddRange( TerrainRemixerAPI.GetCustomPasses() );
+			passDefs.AddRange( TerrainRemixerAPI.GetCustomPasses(currentPassName) );
 
 			//
 
