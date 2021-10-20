@@ -32,6 +32,7 @@ namespace TerrainRemixer {
 
 		public List<TerrainRemixerGenPassSpec> Passes { get; set; } = new List<TerrainRemixerGenPassSpec> {
 			new TerrainRemixerGenPassSpec {
+				PassName = "Example Vert Opener",
 				LayerName = "Tunnels",
 				//Filter = new TilePatternConfig( new TilePatternBuilder { IsActive = true } ),
 				NoiseFrequency = 0.01f,
@@ -46,6 +47,7 @@ namespace TerrainRemixer {
 				FillWalls = new List<int> { }
 			},
 			new TerrainRemixerGenPassSpec {
+				PassName = "Example Horiz Opener",
 				LayerName = "Tunnels",
 				NoiseFrequency = 0.01f,
 				NoiseValueMinimumUntilTileRemoval = 0.65f,

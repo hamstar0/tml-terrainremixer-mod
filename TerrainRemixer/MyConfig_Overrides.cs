@@ -15,6 +15,10 @@ namespace TerrainRemixer {
 
 		////////////////
 
+		public bool HasOverride( string propName ) {
+			return this.Overrides.ContainsKey( propName );
+		}
+
 		public T Get<T>( string propName ) {
 			if( !this.Overrides.TryGetValue( propName, out object val ) ) {
 				if( !ReflectionLibraries.Get( this, propName, out T myval ) ) {

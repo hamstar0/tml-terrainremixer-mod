@@ -19,6 +19,7 @@ namespace TerrainRemixer {
 			//
 
 			passDefs.AddRange( TerrainRemixerAPI.GetCustomPasses(existingPassName) );
+//int customPasses = passDefs.Count;
 
 			//
 
@@ -31,20 +32,21 @@ namespace TerrainRemixer {
 			if( passDefs.Count == 0 ) {
 				return null;
 			}
+//LogLibraries.Log( "PASSES - CUSTOM: "+customPasses+" TOTAL: "+passDefs.Count );
 
+			int idx = 0;
 			IEnumerable<string> passNames = passDefs
-				.Where( p => !string.IsNullOrEmpty(p.PassName) )
-				.Select( p => p.PassName );
+				.Select( p => {
+					string name = string.IsNullOrEmpty(p.PassName)
+						? "Unnamed "+idx
+						: p.PassName;
+					idx++;
+					return name;
+				} );
 
 			string passName = string.Join( ", ", passNames );
 
-			if( passName.Length == 0 ) {
-				if( isFinal ) {
-					passName = "Noise (Final)";
-				} else {
-					passName = "Noise ("+existingPassName+")";
-				}
-			} else {
+			if( isFinal ) {
 				passName += " (Final)";
 			}
 
@@ -72,20 +74,26 @@ namespace TerrainRemixer {
 			progress.Message = this.Name;   //Lang.gen[76].Value+"..Thin Ice"
 
 			for( int i=0; i< this.PassDefs.Count; i++ ) {
-				this.ApplyPass( progress, this.PassDefs[i] );
+				this.ApplyPass( progress, i );
 			}
 
 			progress.Set( 1f );
 		}
 
 
-		private void ApplyPass( GenerationProgress progress, TerrainRemixerGenPassSpec passSpec ) {
+		private void ApplyPass( GenerationProgress progress, int passDefIdx ) {
 			var config = TerrainRemixerConfig.Instance;
+			TerrainRemixerGenPassSpec passSpec = this.PassDefs[ passDefIdx ];
 			Rectangle tileArea = this.GetRegion( passSpec );
 
 			var then = DateTime.UtcNow;
+			string passName = string.IsNullOrEmpty( passSpec.PassName )
+				? "Unnamed Pass"
+				: passSpec.PassName;
+			passName += " (" + passDefIdx + ")";
+
 			if( config.DebugModeInfo ) {
-				LogLibraries.Log( "Applying pass "+this.Name+" to "+tileArea.ToString() );
+				LogLibraries.Log( "Applying pass "+passName+" to "+tileArea.ToString() );
 			}
 
 			(float[], float, float) map = TerrainRemixerGenPass.GetNoiseMap(
@@ -114,7 +122,7 @@ namespace TerrainRemixer {
 
 			var now = DateTime.UtcNow;
 			if( config.DebugModeInfo ) {
-				LogLibraries.Log( " Applied pass "+this.Name+": "+(now - then).TotalSeconds+"s" );
+				LogLibraries.Log( " Applied pass "+passName+": "+(now - then).TotalSeconds+"s" );
 			}
 		}
 
