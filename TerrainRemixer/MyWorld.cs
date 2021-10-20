@@ -13,10 +13,7 @@ namespace TerrainRemixer {
 
 			for( int i=0; i<tasks.Count; i++ ) {
 				string currPassName = tasks[i].Name;
-				pass = TerrainRemixerGenPass.CreatePass(
-					currPassName,
-					"Adding Noise (before '"+currPassName+"')"
-				);
+				pass = TerrainRemixerGenPass.CreatePass( currPassName, false );
 
 				if( pass != null ) {
 					tasks.Insert( i, pass );
@@ -27,7 +24,7 @@ namespace TerrainRemixer {
 
 			pass = TerrainRemixerGenPass.CreatePass(
 				"Post Generation",  // denotes end of vanilla list
-				"Adding Noise (final)"
+				true
 			);
 
 			if( pass != null ) {

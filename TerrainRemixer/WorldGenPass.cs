@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.World.Generation;
@@ -9,7 +10,7 @@ using ModLibsCore.Libraries.Debug;
 
 namespace TerrainRemixer {
 	partial class TerrainRemixerGenPass : GenPass {
-		public static TerrainRemixerGenPass CreatePass( string currentPassName, string newPassName ) {
+		public static TerrainRemixerGenPass CreatePass( string existingPassName, bool isFinal ) {
 			var passDefs = new List<TerrainRemixerGenPassSpec>();
 
 			var config = TerrainRemixerConfig.Instance;
@@ -17,12 +18,12 @@ namespace TerrainRemixer {
 
 			//
 
-			passDefs.AddRange( TerrainRemixerAPI.GetCustomPasses(currentPassName) );
+			passDefs.AddRange( TerrainRemixerAPI.GetCustomPasses(existingPassName) );
 
 			//
 
 			foreach( TerrainRemixerGenPassSpec passDef in allPassDefs ) {
-				if( passDef.LayerName == currentPassName ) {
+				if( passDef.LayerName == existingPassName ) {
 					passDefs.Add( passDef );
 				}
 			}
@@ -31,7 +32,23 @@ namespace TerrainRemixer {
 				return null;
 			}
 
-			return new TerrainRemixerGenPass( newPassName, passDefs );
+			IEnumerable<string> passNames = passDefs
+				.Where( p => !string.IsNullOrEmpty(p.PassName) )
+				.Select( p => p.PassName );
+
+			string passName = string.Join( ", ", passNames );
+
+			if( passName.Length == 0 ) {
+				if( isFinal ) {
+					passName = "Noise (Final)";
+				} else {
+					passName = "Noise ("+existingPassName+")";
+				}
+			} else {
+				passName += " (Final)";
+			}
+
+			return new TerrainRemixerGenPass( passName, passDefs );
 		}
 
 

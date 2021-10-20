@@ -17,6 +17,11 @@ namespace TerrainRemixer {
 
 
 	public partial class TerrainRemixerGenPassSpec {
+		public string PassName { get; set; } = "";
+
+
+		////
+
 		public TilePatternConfig Filter { get; set; } = new TilePatternConfig(
 			new TilePatternBuilder { IsActive = true }
 		);
